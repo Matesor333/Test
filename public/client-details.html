@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PT CRM - Client Details</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <h2>PT CRM</h2>
+          <p>Personal Trainer</p>
+        </div>
+        <ul class="nav-links">
+          <li class="nav-item" data-page="dashboard">
+            <a href="/"
+              ><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a
+            >
+          </li>
+          <li class="nav-item active" data-page="clients">
+            <a href="/clients"
+              ><i class="fas fa-users"></i><span>Clients</span></a
+            >
+          </li>
+          <li class="nav-item" data-page="programs">
+            <a href="/programs"
+              ><i class="fas fa-dumbbell"></i><span>Programs</span></a
+            >
+          </li>
+          <li class="nav-item" data-page="calendar">
+            <a href="/calendar"
+              ><i class="far fa-calendar-alt"></i><span>Calendar</span></a
+            >
+          </li>
+          <li class="nav-item" data-page="messages">
+            <a href="/messages"
+              ><i class="far fa-comment-dots"></i><span>Messages</span></a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <main class="content">
+        <header class="top-bar">
+          <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search..." />
+          </div>
+          <div class="user-profile">
+            <span>Welcome, Trainer</span>
+            <div class="profile-pic">
+              <i class="fas fa-user-circle"></i>
+            </div>
+          </div>
+        </header>
+
+        <div id="client-details-page" class="page active">
+          <div class="page-header">
+            <button class="btn-back" id="back-to-clients">
+              <i class="fas fa-arrow-left"></i> Back to Clients
+            </button>
+            <h1 id="client-name-header">Client Details</h1>
+          </div>
+
+          <div class="client-info-container">
+            <div class="client-basic-info">
+              <div class="info-card">
+                <h3>Basic Information</h3>
+                <div class="info-row">
+                  <span class="info-label">Name:</span>
+                  <span id="detail-name" class="info-value"></span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Email:</span>
+                  <span id="detail-email" class="info-value"></span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Age:</span>
+                  <span id="detail-age" class="info-value"></span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Height:</span>
+                  <span id="detail-height" class="info-value"></span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Weight:</span>
+                  <span id="detail-weight" class="info-value"></span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Goal:</span>
+                  <span id="detail-goal" class="info-value"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="client-progress">
+              <div class="chart-card">
+                <h3>Weight Progress</h3>
+                <canvas id="weightProgressChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="client-plans">
+            <div class="plans-header">
+              <h3>Client Plans</h3>
+              <div class="plans-tabs">
+                <button class="plan-tab active" data-plan="workout">
+                  Workout Plans
+                </button>
+                <button class="plan-tab" data-plan="meal">Meal Plans</button>
+              </div>
+            </div>
+
+            <div id="workout-plans" class="plan-content active">
+              <div class="plan-actions">
+                <button id="add-workout-plan" class="btn-primary">
+                  <i class="fas fa-plus"></i> Add Workout Plan
+                </button>
+              </div>
+              <div class="plans-list" id="workout-plans-list">
+                <!-- Workout plans will be loaded here -->
+              </div>
+            </div>
+
+            <div id="meal-plans" class="plan-content">
+              <div class="plan-actions">
+                <button id="add-meal-plan" class="btn-primary">
+                  <i class="fas fa-plus"></i> Add Meal Plan
+                </button>
+              </div>
+              <div class="plans-list" id="meal-plans-list">
+                <!-- Meal plans will be loaded here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal for adding a new plan -->
+    <div id="add-plan-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="plan-modal-title">Add New Plan</h2>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="add-plan-form">
+            <div class="form-group">
+              <label for="plan-name">Plan Name</label>
+              <input type="text" id="plan-name" required />
+            </div>
+            <div class="form-group">
+              <label for="plan-description">Description</label>
+              <textarea id="plan-description" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="plan-duration">Duration (weeks)</label>
+              <input
+                type="number"
+                id="plan-duration"
+                min="1"
+                max="52"
+                value="4"
+                required
+              />
+            </div>
+            <div id="workout-plan-fields">
+              <div class="form-group">
+                <label for="workout-days">Workout Days</label>
+                <div class="workout-days-selector">
+                  <label
+                    ><input
+                      type="checkbox"
+                      class="workout-day"
+                      value="Monday"
+                    />
+                    Monday</label
+                  >
+                  <label
+                    ><input
+                      type="checkbox"
+                      class="workout-day"
+                      value="Tuesday"
+                    />
+                    Tuesday</label
+                  >
+                  <label
+                    ><input
+                      type="checkbox"
+                      class="workout-day"
+                      value="Wednesday"
+                    />
+                    Wednesday</label
+                  >
+                  <label
+                    ><input
+                      type="checkbox"
+                      class="workout-day"
+                      value="Thursday"
+                    />
+                    Thursday</label
+                  >
+                  <label
+                    ><input
+                      type="checkbox"
+                      class="workout-day"
+                      value="Friday"
+                    />
+                    Friday</label
+                  >
+                  <label
+                    ><input
+                      type="checkbox"
+                      class="workout-day"
+                      value="Saturday"
+                    />
+                    Saturday</label
+                  >
+                  <label
+                    ><input
+                      type="checkbox"
+                      class="workout-day"
+                      value="Sunday"
+                    />
+                    Sunday</label
+                  >
+                </div>
+              </div>
+
+              <div id="workout-days-container">
+                <!-- Workout days will be added here dynamically -->
+              </div>
+
+              <div class="form-group workout-template" style="display: none">
+                <div class="workout-day-header">
+                  <h4>Day: <span class="day-name"></span></h4>
+                  <input
+                    type="text"
+                    class="workout-day-title"
+                    placeholder="e.g., Push Day, Leg Day..."
+                  />
+                </div>
+
+                <div class="exercises-container">
+                  <!-- Exercises will be added here -->
+                </div>
+
+                <button type="button" class="btn-secondary btn-add-exercise">
+                  <i class="fas fa-plus"></i> Add Exercise
+                </button>
+              </div>
+            </div>
+            <div id="meal-plan-fields" style="display: none">
+              <div class="form-group">
+                <label for="calorie-target">Daily Calorie Target</label>
+                <input
+                  type="number"
+                  id="calorie-target"
+                  min="1000"
+                  max="5000"
+                />
+              </div>
+              <div class="form-group">
+                <label for="meal-details">Meal Plan Details</label>
+                <textarea
+                  id="meal-details"
+                  rows="6"
+                  placeholder="Enter meal plan details, meals, portions, etc."
+                ></textarea>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" id="cancel-add-plan">
+                Cancel
+              </button>
+              <button type="submit" class="btn-primary">Add Plan</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exercise row template (hidden) -->
+    <template id="exercise-row-template">
+      <div class="exercise-row">
+        <div class="exercise-header">
+          <input
+            type="text"
+            class="exercise-name"
+            placeholder="Exercise name"
+          />
+          <button type="button" class="btn-icon btn-remove-exercise">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="exercise-details">
+          <div class="exercise-input-group">
+            <label>Sets</label>
+            <input
+              type="number"
+              class="exercise-sets"
+              min="1"
+              max="10"
+              value="3"
+            />
+          </div>
+          <div class="exercise-input-group">
+            <label>Reps</label>
+            <input
+              type="text"
+              class="exercise-reps"
+              placeholder="e.g., 8-12, 10"
+            />
+          </div>
+          <div class="exercise-input-group exercise-notes-group">
+            <label>Notes</label>
+            <textarea
+              class="exercise-notes"
+              placeholder="Notes, rest time, tempo..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <script src="js/client-details.js"></script>
+    <script src="js/charts.js"></script>
+  </body>
+</html>

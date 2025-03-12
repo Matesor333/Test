@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PT CRM - Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h2>PT CRM</h2>
+        <p>Personal Trainer</p>
+      </div>
+      <ul class="nav-links">
+        <li class="nav-item active" data-page="dashboard">
+          <a href="/"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+        </li>
+        <li class="nav-item" data-page="clients">
+          <a href="/clients"><i class="fas fa-users"></i><span>Clients</span></a>
+        </li>
+        <li class="nav-item" data-page="programs">
+          <a href="/programs"><i class="fas fa-dumbbell"></i><span>Programs</span></a>
+        </li>
+        <li class="nav-item" data-page="calendar">
+          <a href="/calendar"><i class="far fa-calendar-alt"></i><span>Calendar</span></a>
+        </li>
+        <li class="nav-item" data-page="messages">
+          <a href="/messages"><i class="far fa-comment-dots"></i><span>Messages</span></a>
+        </li>
+      </ul>
+    </nav>
+
+    <main class="content">
+      <header class="top-bar">
+        <div class="search-container">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search...">
+        </div>
+        <div class="user-profile">
+          <span>Welcome, Trainer</span>
+          <div class="profile-pic">
+            <i class="fas fa-user-circle"></i>
+          </div>
+        </div>
+      </header>
+
+      <div id="dashboard-page" class="page active">
+        <h1>Dashboard</h1>
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-info">
+              <h3>Total Clients</h3>
+              <p id="total-clients">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-user-check"></i>
+            </div>
+            <div class="stat-info">
+              <h3>Active Clients</h3>
+              <p id="active-clients">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-clipboard-list"></i>
+            </div>
+            <div class="stat-info">
+              <h3>Total Programs</h3>
+              <p>12</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="stat-info">
+              <h3>Sessions Today</h3>
+              <p>5</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <div class="chart-card">
+            <h3>Client Growth</h3>
+            <canvas id="clientGrowthChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Session Distribution</h3>
+            <canvas id="sessionDistributionChart"></canvas>
+          </div>
+        </div>
+
+        <div class="recent-activity">
+          <h3>Recent Activity</h3>
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <div class="activity-details">
+                <p><strong>New Client:</strong> Jane Smith joined</p>
+                <span class="activity-time">2 hours ago</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-clipboard-check"></i>
+              </div>
+              <div class="activity-details">
+                <p><strong>Program Updated:</strong> Weight Loss Plan v2</p>
+                <span class="activity-time">Yesterday</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-comment"></i>
+              </div>
+              <div class="activity-details">
+                <p><strong>New Message:</strong> from John Doe</p>
+                <span class="activity-time">Yesterday</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/charts.js"></script>
+</body>
+</html>

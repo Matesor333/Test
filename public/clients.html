@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PT CRM - Clients</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h2>PT CRM</h2>
+        <p>Personal Trainer</p>
+      </div>
+      <ul class="nav-links">
+        <li class="nav-item" data-page="dashboard">
+          <a href="/"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+        </li>
+        <li class="nav-item active" data-page="clients">
+          <a href="/clients"><i class="fas fa-users"></i><span>Clients</span></a>
+        </li>
+        <li class="nav-item" data-page="programs">
+          <a href="/programs"><i class="fas fa-dumbbell"></i><span>Programs</span></a>
+        </li>
+        <li class="nav-item" data-page="calendar">
+          <a href="/calendar"><i class="far fa-calendar-alt"></i><span>Calendar</span></a>
+        </li>
+        <li class="nav-item" data-page="messages">
+          <a href="/messages"><i class="far fa-comment-dots"></i><span>Messages</span></a>
+        </li>
+      </ul>
+    </nav>
+    
+    <main class="content">
+      <header class="top-bar">
+        <div class="search-container">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search...">
+        </div>
+        <div class="user-profile">
+          <span>Welcome, Trainer</span>
+          <div class="profile-pic">
+            <i class="fas fa-user-circle"></i>
+          </div>
+        </div>
+      </header>
+      
+      <div id="clients-page" class="page active">
+        <div class="page-header">
+          <h1>Clients</h1>
+          <button id="add-client-btn" class="btn-primary">
+            <i class="fas fa-plus"></i> Add New Client
+          </button>
+        </div>
+        
+        <div class="search-filter">
+          <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="client-search" placeholder="Search clients...">
+          </div>
+          <div class="filter-options">
+            <select id="filter-status">
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+            <select id="filter-goal">
+              <option value="all">All Goals</option>
+              <option value="weight-loss">Weight Loss</option>
+              <option value="muscle-gain">Muscle Gain</option>
+              <option value="general-fitness">General Fitness</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="clients-table-container">
+          <table class="clients-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Goal</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="clients-table-body">
+              <!-- Clients will be loaded here dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Modal for adding a new client -->
+  <div id="add-client-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add New Client</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="add-client-form">
+          <div class="form-group">
+            <label for="client-name">Name</label>
+            <input type="text" id="client-name" required>
+          </div>
+          <div class="form-group">
+            <label for="client-email">Email</label>
+            <input type="email" id="client-email" required>
+          </div>
+          <div class="form-group">
+            <label for="client-age">Age</label>
+            <input type="number" id="client-age" min="18" max="100" required>
+          </div>
+          <div class="form-group">
+            <label for="client-weight">Weight (kg)</label>
+            <input type="number" id="client-weight" min="30" max="300" required>
+          </div>
+          <div class="form-group">
+            <label for="client-height">Height (cm)</label>
+            <input type="number" id="client-height" min="100" max="250" required>
+          </div>
+          <div class="form-group">
+            <label for="client-goal">Goal</label>
+            <select id="client-goal" required>
+              <option value="">Select a goal</option>
+              <option value="Weight loss">Weight loss</option>
+              <option value="Muscle gain">Muscle gain</option>
+              <option value="General fitness">General fitness</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="cancel-add-client">Cancel</button>
+            <button type="submit" class="btn-primary">Add Client</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script src="js/clients.js"></script>
+  <script src="js/charts.js"></script>
+</body>
+</html>

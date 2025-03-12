@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PT CRM - Calendar</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h2>PT CRM</h2>
+        <p>Personal Trainer</p>
+      </div>
+      <ul class="nav-links">
+        <li class="nav-item" data-page="dashboard">
+          <a href="/"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+        </li>
+        <li class="nav-item" data-page="clients">
+          <a href="/clients"><i class="fas fa-users"></i><span>Clients</span></a>
+        </li>
+        <li class="nav-item" data-page="programs">
+          <a href="/programs"><i class="fas fa-dumbbell"></i><span>Programs</span></a>
+        </li>
+        <li class="nav-item active" data-page="calendar">
+          <a href="/calendar"><i class="far fa-calendar-alt"></i><span>Calendar</span></a>
+        </li>
+        <li class="nav-item" data-page="messages">
+          <a href="/messages"><i class="far fa-comment-dots"></i><span>Messages</span></a>
+        </li>
+      </ul>
+    </nav>
+    
+    <main class="content">
+      <header class="top-bar">
+        <div class="search-container">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search...">
+        </div>
+        <div class="user-profile">
+          <span>Welcome, Trainer</span>
+          <div class="profile-pic">
+            <i class="fas fa-user-circle"></i>
+          </div>
+        </div>
+      </header>
+      
+      <div id="calendar-page" class="page active">
+        <div class="page-header">
+          <h1>Calendar</h1>
+          <div class="calendar-actions">
+            <div class="calendar-views">
+              <button class="view-btn active" data-view="month">Month</button>
+              <button class="view-btn" data-view="week">Week</button>
+              <button class="view-btn" data-view="day">Day</button>
+            </div>
+            <button id="add-task-btn" class="btn-primary">
+              <i class="fas fa-plus"></i> Add Task
+            </button>
+          </div>
+        </div>
+        
+        <div class="calendar-controls">
+          <button id="prev-btn" class="btn-icon">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <h2 id="calendar-title">September 2023</h2>
+          <button id="next-btn" class="btn-icon">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <button id="today-btn" class="btn-secondary">Today</button>
+        </div>
+        
+        <div id="month-view" class="calendar-view active">
+          <div class="calendar-grid month-grid">
+            <div class="calendar-header">
+              <div>Sunday</div>
+              <div>Monday</div>
+              <div>Tuesday</div>
+              <div>Wednesday</div>
+              <div>Thursday</div>
+              <div>Friday</div>
+              <div>Saturday</div>
+            </div>
+            <div id="month-grid" class="month-days-grid">
+              <!-- Month days will be generated here -->
+            </div>
+          </div>
+        </div>
+        
+        <div id="week-view" class="calendar-view">
+          <div class="calendar-grid week-grid">
+            <div class="calendar-header">
+              <div class="time-column">Time</div>
+              <div>Sunday</div>
+              <div>Monday</div>
+              <div>Tuesday</div>
+              <div>Wednesday</div>
+              <div>Thursday</div>
+              <div>Friday</div>
+              <div>Saturday</div>
+            </div>
+            <div id="week-grid" class="week-hours-grid">
+              <!-- Week hours will be generated here -->
+            </div>
+          </div>
+        </div>
+        
+        <div id="day-view" class="calendar-view">
+          <div class="calendar-grid day-grid">
+            <div id="day-grid" class="day-hours-grid">
+              <!-- Day hours will be generated here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Modal for adding/editing calendar tasks -->
+  <div id="task-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="task-modal-title">Add New Task</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="task-form">
+          <div class="form-group">
+            <label for="task-title">Task Title</label>
+            <input type="text" id="task-title" required>
+          </div>
+          <div class="form-group">
+            <label for="task-description">Description</label>
+            <textarea id="task-description" rows="3"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="task-date">Date</label>
+              <input type="date" id="task-date" required>
+            </div>
+            <div class="form-group">
+              <label for="task-start-time">Start Time</label>
+              <input type="time" id="task-start-time" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="task-duration">Duration</label>
+              <div class="duration-inputs">
+                <input type="number" id="task-duration-hours" min="0" max="23" value="1" required>
+                <span>hours</span>
+                <input type="number" id="task-duration-minutes" min="0" max="59" step="15" value="0" required>
+                <span>minutes</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="task-client">Client (Optional)</label>
+              <select id="task-client">
+                <option value="">None</option>
+                <!-- Clients will be loaded here -->
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="task-color">Color</label>
+            <div class="task-color-options">
+              <label class="color-option">
+                <input type="radio" name="task-color" value="#1a73e8" checked>
+                <span class="color-dot" style="background-color: #1a73e8;"></span>
+              </label>
+              <label class="color-option">
+                <input type="radio" name="task-color" value="#4ecdc4">
+                <span class="color-dot" style="background-color: #4ecdc4;"></span>
+              </label>
+              <label class="color-option">
+                <input type="radio" name="task-color" value="#ff6b6b">
+                <span class="color-dot" style="background-color: #ff6b6b;"></span>
+              </label>
+              <label class="color-option">
+                <input type="radio" name="task-color" value="#ffa500">
+                <span class="color-dot" style="background-color: #ffa500;"></span>
+              </label>
+              <label class="color-option">
+                <input type="radio" name="task-color" value="#8e44ad">
+                <span class="color-dot" style="background-color: #8e44ad;"></span>
+              </label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="cancel-task">Cancel</button>
+            <button type="submit" class="btn-primary">Save Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script src="js/app.js"></script>
+  <script src="js/calendar.js"></script>
+</body>
+</html>

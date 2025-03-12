@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PT CRM - Programs</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h2>PT CRM</h2>
+        <p>Personal Trainer</p>
+      </div>
+      <ul class="nav-links">
+        <li class="nav-item" data-page="dashboard">
+          <a href="/"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+        </li>
+        <li class="nav-item" data-page="clients">
+          <a href="/clients"><i class="fas fa-users"></i><span>Clients</span></a>
+        </li>
+        <li class="nav-item active" data-page="programs">
+          <a href="/programs"><i class="fas fa-dumbbell"></i><span>Programs</span></a>
+        </li>
+        <li class="nav-item" data-page="calendar">
+          <a href="/calendar"><i class="far fa-calendar-alt"></i><span>Calendar</span></a>
+        </li>
+        <li class="nav-item" data-page="messages">
+          <a href="/messages"><i class="far fa-comment-dots"></i><span>Messages</span></a>
+        </li>
+      </ul>
+    </nav>
+    
+    <main class="content">
+      <header class="top-bar">
+        <div class="search-container">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search...">
+        </div>
+        <div class="user-profile">
+          <span>Welcome, Trainer</span>
+          <div class="profile-pic">
+            <i class="fas fa-user-circle"></i>
+          </div>
+        </div>
+      </header>
+      
+      <div id="programs-page" class="page active">
+        <div class="page-header">
+          <h1>Programs</h1>
+          <button id="add-program-btn" class="btn-primary">
+            <i class="fas fa-plus"></i> Add New Program
+          </button>
+        </div>
+        
+        <div class="programs-container">
+          <div class="programs-filters">
+            <div class="filter-group">
+              <label>Filter by Type:</label>
+              <select id="program-type-filter">
+                <option value="all">All Types</option>
+                <option value="strength">Strength</option>
+                <option value="cardio">Cardio</option>
+                <option value="hiit">HIIT</option>
+                <option value="flexibility">Flexibility</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Sort by:</label>
+              <select id="program-sort">
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="name-asc">Name A-Z</option>
+                <option value="name-desc">Name Z-A</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="programs-grid" id="programs-grid">
+            <!-- Programs will be loaded here dynamically -->
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script src="js/app.js"></script>
+  <script src="js/programs.js"></script>
+</body>
+</html>
